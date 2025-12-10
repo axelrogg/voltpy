@@ -31,6 +31,8 @@ GRAVITY = 9.80665
 class Conductor:
     """Represents an electrical conductor with mechanical and geometric properties.
 
+    All attribute units conform to UNE-EN 50182.
+
     Attributes:
         designation (str): Official designation of the conductor.
         legacy_code (str | None): Legacy or older code for the conductor.
