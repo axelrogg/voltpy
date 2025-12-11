@@ -29,21 +29,10 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import TypedDict
 
+from tabulate import tabulate
+
 from .conductor import Conductor
 from .catenary import CatenaryModel, CatenaryState, CatenaryApparentLoad
-
-
-class SagTensionTableRow(TypedDict):
-    """Represents a row in a sag-tension table.
-
-    Attributes:
-        span (float): The span length in meters.
-        results (list[float]): A list of calculated tensions (in daN) for each
-            hypothesis in the analysis.
-    """
-
-    span: float
-    results: list[float]
 
 
 class MechAnalysisZone(Enum):
@@ -60,6 +49,48 @@ class MechAnalysisZone(Enum):
             description: Human-readable description of the zone.
         """
         self.description = description
+
+
+@dataclass
+class MechAnalysisHypothesis:
+    """Represents a single hypothesis (scenario) for mechanical analysis."""
+
+    temp: float
+    rts_factor: float
+    zone: MechAnalysisZone | None = None
+    wind_speed: float = 0.
+    with_ice: bool = False
+    name: str | None = None
+
+
+class SagTensionTableRow(TypedDict):
+    """Represents a row in a sag-tension table.
+
+    Attributes:
+        span (float): The span length in meters.
+        results (list[float]): A list of calculated tensions (in daN) for each
+            hypothesis in the analysis.
+    """
+
+    span: float
+    results: list[float]
+
+
+@dataclass
+class SagTensionTable:
+    hypos: list[MechAnalysisHypothesis] = []
+    rows: list[SagTensionTableRow] = []
+
+    def __str__(self) -> str:
+        tbl_data = {
+            "Span": [row["span"] for row in self.rows],
+            **{
+                hypo.name: [row["results"][i] for row in self.rows]
+                for i, hypo in enumerate(self.hypos)
+            }
+        }
+        return tabulate(tbl_data, headers="index", tablefmt="github")
+
 
 class MechAnalysis:
     """Performs mechanical analysis of a conductor for a given zone."""
@@ -173,18 +204,6 @@ class MechAnalysis:
         return math.sqrt(sum(pow(span, 3) for span in spans) / sum(spans))
 
 
-@dataclass
-class MechAnalysisHypothesis:
-    """Represents a single hypothesis (scenario) for mechanical analysis."""
-
-    temp: float
-    rts_factor: float
-    zone: MechAnalysisZone | None = None
-    wind_speed: float = 0.
-    with_ice: bool = False
-    name: str | None = None
-
-
 class SagTensionAnalyzer:
     """Generates sag-tension tables and finds controlling mechanical states."""
 
@@ -234,7 +253,7 @@ class SagTensionAnalyzer:
 
         return None
 
-    def tbl(self, spans: list[float] | list[int]) -> list[SagTensionTableRow] | None:
+    def tbl(self, spans: list[float] | list[int]) -> SagTensionTable | None:
         """Generate a sag-tension table for a list of spans.
 
         Args:
@@ -245,7 +264,7 @@ class SagTensionAnalyzer:
             for each hypothesis or None if no controlling state was found.
         """
 
-        tbl: list[SagTensionTableRow] = []
+        tbl = SagTensionTable(hypos=self.hypotheses)
 
         for span in spans:
             controller = self.find_controlling_state(span)
@@ -263,7 +282,7 @@ class SagTensionAnalyzer:
 
                 row["results"].append(state1.tense)
 
-            tbl.append(row)
+            tbl.rows.append(row)
 
         return tbl
 
