@@ -1,12 +1,12 @@
 [project]
 name = "ohmly"
-version = "0.0.6"
+version = "0.0.7"
 description = "An electrical and mechanical analysis tool of overhead conductors."
 authors = [
     {name = "Axel Rodríguez Chang", email = "axelrogg@icloud.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.9"
 dependencies = [
     "rich (>=14.2.0,<15.0.0)"
 ]
