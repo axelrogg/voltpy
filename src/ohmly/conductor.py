@@ -30,8 +30,7 @@ from rich.console import Console
 from rich.table import Table
 from rich import box
 
-
-GRAVITY = 9.80665
+from .constants import GRAVITY
 
 
 CONDUCTOR_ATTRIBS_UNITS = {
@@ -187,6 +186,28 @@ class ConductorRepository:
 
         with importlib.resources.path("ohmly", "conductor_db") as dbpath:
             return sqlite3.connect(dbpath)
+
+    def list_all(self) -> list[dict[str, str]]:
+        """Return all available conductors with minimal identifying information.
+
+        Retrieves the official designation and legacy code for every conductor
+        stored in the database. This method does not load full conductor properties
+        and is intended for listing, selection menus, or discovery purposes.
+
+        Returns:
+            list[dict[str, str]]: A list of dictionaries with keys:
+                - "designation": Official conductor designation.
+                - "legacy_code": Legacy or alternate conductor code.
+        """
+
+        query = f"select designation, legacy_code from {self.table}"
+        cur = self.conn.execute(query)
+
+        return [
+            {"designation": row[0], "legacy_code": row[1]}
+            for row in cur.fetchall()
+        ]
+
 
     def get(self, designation: str | None = None, legacy_code: str | None = None) -> Conductor:
         """Retrieves a conductor by designation or legacy code.

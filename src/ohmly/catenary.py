@@ -34,7 +34,7 @@ class CatenaryState:
     Attributes:
         temp (float): Conductor temperature in degrees Celsius.
         tense (float): Horizontal tension in the conductor (daN).
-        weight (float): Effective weight per unit length (daN/m), including any ice or additional loads.
+        weight (float): Permanent weight per unit length (daN/m), including any ice or additional loads.
     """
 
     temp: float
@@ -48,15 +48,15 @@ class CatenaryApparentLoad:
 
     Attributes:
         wind_load: Horizontal load component from wind (daN/m).
-        effective_load: Vertical load component (bare + ice) (daN/m).
+        permanent_load: Vertical load component (bare + ice) (daN/m).
     """
     wind_load: float
-    effective_load: float
+    permanent_load: float
 
     @property
     def resultant(self):
         """Returns the magnitude of resultant load vector."""
-        return math.sqrt(self.wind_load ** 2 + self.effective_load **2)
+        return math.sqrt(self.wind_load ** 2 + self.permanent_load **2)
 
     @property
     def swing_angle(self):
@@ -65,11 +65,11 @@ class CatenaryApparentLoad:
         Swing angle is the angle formed between the conductor’s resultant load
         vector and the vertical direction.
         """
-        return math.atan2(self.wind_load, self.effective_load)
+        return math.atan2(self.wind_load, self.permanent_load)
 
     def __str__(self):
         """Return a readable string representation of the load."""
-        return f"CatenaryApparentLoad(wind_load={self.wind_load}, effective_load={self.effective_load}) daN/m"
+        return f"CatenaryApparentLoad(wind_load={self.wind_load}, permanent_load={self.permanent_load}) daN/m"
 
     
 class CatenaryModel:

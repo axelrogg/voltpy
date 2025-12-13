@@ -215,11 +215,11 @@ class MechAnalysis:
             wind_pressure = 50 * wind_velocity_factor
 
         wind_load = wind_pressure * total_diameter
-        effective_load = self.conductor.unit_weight  # we're converting from kN/m in daN/m
+        permanent_load = self.conductor.unit_weight 
         if with_ice:
-            effective_load += self.ice_weight
+            permanent_load += self.ice_weight
 
-        return CatenaryApparentLoad(wind_load, effective_load)
+        return CatenaryApparentLoad(wind_load, permanent_load)
 
     def overload_factor(self, apparent_load: CatenaryApparentLoad) -> float:
         """Returns the ratio of resultant load to the conductor's weight.
