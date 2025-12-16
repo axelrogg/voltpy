@@ -15,10 +15,22 @@ The library includes:
 -   Temperature-dependent tension models.
 -   Wind & ice loading.
 
-> [!WARNING]
-> Currently, all calculations follow the Spanish ITC-LAT 07 regulation only.
+> [!IMPORTANT]
+> All mechanical calculations currently follow **Spanish ITC-LAT 07** only.
+> Other regulations are not yet implemented.
 
-Electrical analysis modules will be added in future releases.
+> [!WARNING]
+> Electrical analysis modules will be added in future releases.
+
+
+## Disclaimer
+
+Ohmly is an MIT-licensed engineering support tool.
+
+Mechanical calculations currently follow Spanish ITC-LAT 07 only and must be
+validated by a qualified engineer.
+
+See `docs/DISCLAIMER.md` for full details.
 
 
 ## Why Use Ohmly?
@@ -29,13 +41,32 @@ Electrical analysis modules will be added in future releases.
 -   Clear results: Sag-tension tables are easy to read and integrate into reports.
 
 
-# Installation
+## Documentation
+
+Comprehensive documentation, tutorials, and normative explanations are
+available in the project documentation.
+
+The docs cover:
+
+- Mechanical analysis workflow (ITC-LAT 07)
+- Conductor definition (database and manual)
+- Mechanical analysis zones
+- Wind, ice, and apparent load calculations
+- Hypothesis definition and validation
+- Sag–tension tables and controlling hypotheses
+
+📘 **Read the full documentation here:**  
+https://github.com/axelrogg/ohmly/tree/main/docs
+
+
+## Installation
 
 ```bash
 pip install ohmly
 ```
 
-# Getting Started
+
+## Getting Started
 
 Here's a minimal example that shows how fast it is to compute sag-tension results.
 
@@ -74,4 +105,16 @@ Sample output:
    200   974.1000, 15.0000   1160.4121, 17.8690
    300   974.1000, 15.0000   1067.9360, 16.4450
 ```
+
+For a complete, regulation-aligned explanation of each step, see the
+[Mechanical Analysis documentation](docs/mechanical-analysis.md).
+
+
+---
+
+## Project Structure
+
+- `ohmly/` – Core library code
+- `docs/` – Mechanical analysis documentation and tutorials (ITC-LAT 07)
+
 
