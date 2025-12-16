@@ -1,6 +1,6 @@
 [project]
 name = "ohmly"
-version = "0.0.10"
+version = "0.0.11"
 description = "An electrical and mechanical analysis tool of overhead conductors."
 authors = [
     {name = "Axel Rodríguez Chang", email = "axelrogg@icloud.com"}
