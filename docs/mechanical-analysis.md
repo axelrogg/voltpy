@@ -174,8 +174,7 @@ The following will be printed in your terminal.
     since all Ohmly's functions assume these units.
 
 Once created, a manually defined conductor is indistinguishable from one loaded
-from the database and can bE used in all mechanical analyses.
-
+from the database and can be used in all mechanical analyses.
 
 ## Defining a Mechanical Analysis Context
 
@@ -202,17 +201,18 @@ whether ice loads must be considered and their severity.
 Ohmly models these zones using the `MechAnalysisZone` enum:
 
 | Zone    | Description            | Ice considered |
-|-------- | ---------------------- | -------------- |
+| ------- | ---------------------- | -------------- |
 |    A    | Below 500 m            | No             |
 |    B    | Between 500 and 1000 m | Yes (moderate) |
 |    C    | Above 1000 m           | Yes (severe)   |
 
-The selected zone directly afflects:
+The selected zone directly affects:
 
 -   ice load per unit length,
 -   apparent load calculations,
 -   overload factors, and
 -   sag-tension results under ice-related hypotheses.
+
 
 ### Creating a Mechanical Analysis Context
 
@@ -239,7 +239,8 @@ calculations, including:
 -   ruling span calculations, and
 -   sag-tension tables.
 
-### Why the Zone Belongs to the Analysis Context
+
+### Why the Zone Belongs to the Analysis Context?
 
 The mechanical zone is a property of the line environment, not an individual
 load scenarios.
@@ -329,7 +330,8 @@ magnitude depends on:
 Ohmly computes wind load using the wind pressure formulation defined in
 ITC-LAT 07 and applies it per unit length of conductor.
 
-Wind speed is always specified in km/h.
+!!! Note
+    Wind speed is always specified in km/h.
 
 ### Apparent Load
 
@@ -375,7 +377,10 @@ relative to the conductor's own weight.
 
 Ohmly provides an `MechAnalysis.overload_factor()` method, defined as:
 
-![Overload factor equation](https://latex.codecogs.com/svg.image?%5Cbg%7Bwhite%7D%5Ctext%7BOverload%20factor%7D=%5Cfrac%7B%5Ctext%7BApparent%20load%7D%7D%7B%5Ctext%7BBare%20conductor%20weight%7D%7D)
+$$
+\text{Overload factor} = \frac{\text{Apparent load}}{\text{Bare conductor weight}}
+$$
+
 
 This factor is dimensionless and is often used to quickly assess how demanding a
 given hypothesis is.
@@ -479,14 +484,16 @@ hypos = [
 Not every hypothesis can be used as the reference state for sag-tension
 calculations.
 
-A **controlling hypothesis** is defined as one that:
+A **controlling hypothesis** is defined as one that
+
 -   satisfies its own allowable tension, and
 -   when used as a base state, does not cause any other hypothesis to exceed
     its allowable tension after state change.
 
-Ohmly determines the controlling hypothesis automatically.
+!!! Important
+    Ohmly determines the controlling hypothesis automatically.
 
-If not such hypothesis exists, the configuration is considered invalid.
+    If not such hypothesis exists, the configuration is considered invalid.
 
 ### Sag-Tension Table Calculation
 
@@ -520,7 +527,7 @@ print(table)
 
 If a controlling hypothesis exists, a formatted sag-tension table is returned.
 
-Each cell contains:
+Each cell contains
 
 -   conductor tension (daN),
 -   corresponding percentage of rated strength.

@@ -1,6 +1,6 @@
 site_name: Ohmly Documentation
 site_description: Mechanical analysis of overhead conductors (ITC-LAT 07)
-site_author: Axel
+site_author: Axel Rodríguez Chang
 repo_url: https://github.com/axelrogg/ohmly
 repo_name: ohmly
 
@@ -8,17 +8,37 @@ theme:
   name: material
   language: en
   features:
+    - content.code.copy
+    - navigation.instant
     - navigation.tabs
     - navigation.sections
-    - content.code.copy
+
+plugins:
+  - search
+  - i18n:
+      docs_structure: folder
+      languages:
+        - locale: en
+          name: English
+          build: true
+          default: true
+
+        - locale: es
+          name: Español
+          build: true
 
 markdown_extensions:
   - admonition
   - pymdownx.superfences
   - pymdownx.details
   - pymdownx.highlight
+  - pymdownx.arithmatex:
+      generic: true
   - toc:
       permalink: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 nav:
   - Home: index.md

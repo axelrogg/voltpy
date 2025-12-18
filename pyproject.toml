@@ -1,6 +1,6 @@
 [project]
 name = "ohmly"
-version = "0.0.16"
+version = "0.0.17"
 description = "An electrical and mechanical analysis tool of overhead conductors."
 authors = [
     {name = "Axel Rodríguez Chang", email = "axelrogg@icloud.com"}
@@ -28,7 +28,8 @@ build-backend = "poetry.core.masonry.api"
 dev = [
     "mkdocs-material (>=9.7.0,<10.0.0)",
     "mkdocs-awesome-pages-plugin (>=2.10.1,<3.0.0)",
-    "mkdocs-git-revision-date-localized-plugin (>=1.5.0,<2.0.0)"
+    "mkdocs-git-revision-date-localized-plugin (>=1.5.0,<2.0.0)",
+    "mkdocs-static-i18n (>=1.3.0,<2.0.0)"
 ]
 
 [tool.poetry.requires-plugins]

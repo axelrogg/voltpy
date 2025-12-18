@@ -40,7 +40,7 @@ If you print the conductor, you should see the following output in your terminal
 
 ## 2. Create a mechanical analysis context
 
-The mechanical analysis context binds:
+The mechanical analysis context binds
 
 -   the conductor, and
 -   the environmental zone (ITC-LAT 07)
